@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  starterkit:
+    image: starterpackregistry.azurecr.io/starterkit
+    build:
+      context: StarterPack
+      dockerfile: Dockerfile

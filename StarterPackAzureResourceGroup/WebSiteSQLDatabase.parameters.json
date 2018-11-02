@@ -1,0 +1,123 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "JSStarterApp": {
+      "value": "JSStarterApp"
+    },
+    "JSStarterVault": {
+      "value": "JSStarterVault"
+    },
+    "JSStarterAppInsights": {
+      "value": "JSStarterAppInsights"
+    },
+    "JSStarterStorage": {
+      "value": "JSStarterStorage"
+    },
+    "JSStarterServicePlan": {
+      "value": "JSStarterServicePlan"
+    },
+    "JSStarterSqlServer": {
+      "value": "JSStarterSqlServer"
+    },
+    "JSStarterSqlDB": {
+      "value": "JSStarterSqlDB"
+    },
+    "appLogin": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "appLogin"
+      }
+    },
+    "administratorLogin": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "administratorLogin"
+      }
+    },
+    "administratorLoginPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "administratorLoginPassword"
+      }
+    },
+    "Token--Key": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "Token--Key"
+      }
+    },
+    "Token--Issuer": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "Token--Issuer"
+      }
+    },
+    "MailService--Key": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "MailService--Key"
+      }
+    },
+    "BlobService--Key": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "BlobService--Key"
+      }
+    },
+    "MailService--User": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "MailService--User"
+      }
+    },
+    "BlobService--Account": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "BlobService--Account"
+      }
+    },
+    "SeedAccount--UserName": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "SeedAccount--UserName"
+      }
+    },
+    "SeedAccount--Password": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "SeedAccount--Password"
+      }
+    },
+    "ConnectionStrings--DefaultConnection": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+        },
+        "secretName": "ConnectionStrings--DefaultConnection"
+      }
+    }
+  }
+}

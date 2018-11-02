@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "skipDefaultLibCheck": true,
+    "sourceMap": true,
+    "target": "es2017",
+    "types": [
+      "webpack-env",
+      "aspnet-webpack-react"
+    ],
+    //"noUnusedParameters": true,
+    //"noUnusedLocals": true,
+    "lib": [ "es6", "dom" ]
+  },
+  "exclude": [
+    "bin",
+    "node_modules"
+  ]
+}
