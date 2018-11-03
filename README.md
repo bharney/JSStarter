@@ -76,7 +76,7 @@ When the program starts, it will try to access KeyVault. But the Application nee
 Connect-AzureAD -TenantId "xxxxxx-xxxx-xxxx-xxxxxxxxxxx"
 ```
 
-## Get the MSI_CLIENT / ClientId
+## Get the ClientId
 We will grant the Application itself access to KeyVault. This is done through App Registration. Allowing your application to have its own Service Principal. This is what allows the app access to the KeyVault. Your authenticating the application through Azure AD using the Service Principal to access the KeyVault. Additionaly, the Application will need an appropriate Access Policy. [Read more about the auth flow here](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview). Create a new Appication Registration by running the command below. 
 
 ```
@@ -89,22 +89,28 @@ if(!($myApp = Get-AzureADApplication -Filter "DisplayName eq '$($appName)'"  -Er
     $myApp = New-AzureADApplication -DisplayName $appName -IdentifierUris $appURI -Homepage $appHomePageUrl -ReplyUrls $appReplyURLs   
 }
 ```
-Copy and Paste the Application Id into your `secrets.json` file for the `MSI_CLIENT` value. 
+Copy and Paste the Application Id into your `secrets.json` file for the `ClientId` value. 
 
-## Generate MSI_SECRET
+## Generate ClientSecret
 Once the App is registered we will need to get our KeyVaults ObjectId to add an Application Key. This is a randomly generated Guid that will be used by the application to access the KeyVault. Run the command below making sure to populate the value with your KeyVaults `ObjectId`
 
 ```
 New-AzureADApplicationPasswordCredential -ObjectId "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
 ```
 
-We are going to call this generated Key the MSI_SECRET. Remember to copy the Key that is generated because you will not be able to access this later. IMPORTANT: It will forever be ******* after this point. 
+We are going to call this generated Key the ClientSecret. Remember to copy the Key that is generated because you will not be able to access this later. IMPORTANT: It will forever be ******* after this point. 
 
-## Add Secrets to KeyVault
-Add the following secrets to the KeyVault. There is a file `scripts/secrets.json` containing a json object of key value pairs. You will replace the values in the file with your own.
+## User Secrets Manager
+One of the main problems with handling secrets in .NET Core has been working locally vs deploying to production in Azure. When working locally, I am getting my secrets for accessing the KeyVault using the user secrets manager built into VS 2017. And on `Program.cs` I access the `secrets.json` and use those to request the KeyVault List of secrets. Then adding those values to the config file. 
 
+This prevents me from accidentally committing secrets to source control. I store the key vault access keys/secrets in a `secrets.json` outside of source control, and VS2017 handles the file for me. It adds a property to the .proj file pointing to the location of `secrets.jon` in `%APPADATA%`. Additional information can be found [here](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.1&tabs=windows): 
+ - Solution Explorer > Right click on `StarterKit > Manage User Secrets`
+![image](https://user-images.githubusercontent.com/8311928/47606608-7e46f200-d9ca-11e8-967f-e760f80b1171.png)
+ 
+Copy and Paste the `secrets.json` file below (without the comments). This will be the json file we use to script secrets into KeyVault. 
+ 
 ```
-{
+[{
   "ConnectionStrings--DefaultConnection": "Server=tcp:[sqlServer].database.windows.net,1433;Initial Catalog=[sqlDB];Persist Security Info=False;User ID=[sqlUserName];Password=[sqlPassword];MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
   "Token--Key": "[YOUR_KEY]",                      --Token Key is use for JWT to be used for cryptographic signiture.
   "Token--Issuer": "[YOUR_ISSUER]",                --Token Issuer is generally the authority issuing JWT or your domain.
@@ -114,13 +120,14 @@ Add the following secrets to the KeyVault. There is a file `scripts/secrets.json
   "BlobService--Key": "[YOUR_KEY]",                --Azure Blob storage Key.
   "SeedAccount--UserName": "[YOUR_SEED_EMAIL]",    --Admin Seed Data Account.
   "SeedAccount--Password": "[YOUR_SEED_PASSWORD]", --Admin Seed Data Account Password.
-  "MSI_SECRET": "[YOUR_MSI_SECRET]",               --This the Application Credentials that you generated for Azure App Registration.
-  "MSI_ENDPOINT": "[YOUR_KEY_VAULT_URL]/",         --Key Vault Endpoint Url.
-  "MSI_CLIENT": "[YOUR_AZURE_AD_APP_ID]",          --Azure Active Directory App Id.
-}
+  "ClientSecret": "[YOUR_CLIENT_SECRET]",          --This the Application Credentials that you generated for Azure App Registration.
+  "VaultEndpoint": "[YOUR_KEY_VAULT_URL]/",        --Key Vault Endpoint Url.
+  "ClientId": "[YOUR_AZURE_AD_APP_ID]",            --Azure Active Directory App Id.
+}]
 ```
 
-These need to be added to the KeyVault befor deploying the ARM template. After you have updated your `secrets.json` file with your own values, run the command below to add the secrets to your KeyVault.
+## Add Secrets to KeyVault
+Add the following secrets to the KeyVault. There is a file `scripts/secrets.json` containing a json object of key value pairs. You will replace the values in the file with your own. Dont inclue the --comments at the end of each line. After you have updated your `secrets.json` file with your own values, run the command below to add the secrets to your KeyVault. These need to be added to the KeyVault befor deploying the ARM template.
 
 ```
 # helper to turn PSCustomObject into a list of key/value pairs
@@ -135,16 +142,14 @@ function Get-ObjectMembers {
         [PSCustomObject]@{Key = $key; Value = $obj."$key"}
     }
 }
-	$secretsJson = Get-Content secrets.json
-	$secrets = "[" + $secretsJson + "]"
+	$secrets = Get-Content secrets.json
 	$secrets | ConvertFrom-Json | Get-ObjectMembers | foreach {
-		   $secret = $_.Value
-	   	$secretvalue = ConvertTo-SecureString $secret -AsPlainText -Force
-   		Set-AzureKeyVaultSecret -VaultName $keyVaultName -Name $_.Key -SecretValue $secretvalue
+	   $secretvalue = ConvertTo-SecureString $_.Value -AsPlainText -Force
+   	   Set-AzureKeyVaultSecret -VaultName $keyVaultName -Name $_.Key -SecretValue $secretvalue
  }
 ```
 # Deploy Azure Resource Manager Template
-Now that you have a KeyVault, Credentials for your app, and secrets in the KeyVault you will use these in combination with the ARM Template and set the resources up with correct access policies and credentials. When running locally we will pull the MSI_SECRET and MSI_CLIENT from `secrets.json`. And when deploying we are able to retrieve the values needed to access Key Vault, from `appsettings` in Azure. The appsettings are set and managed directly from the AzureResourceGroup project and ARM template is run during deployment in AzureDevOps. Deploy the Azure Resources by right clicking on the AzureResourceGroup project. 
+Now that you have a KeyVault, Credentials for your app, and secrets in the KeyVault you will use these in combination with the ARM Template and set the resources up with correct access policies and credentials. When running locally we will pull the ClientSecret and ClientId from `secrets.json`. And when deploying we are able to retrieve the values needed to access Key Vault, from `appsettings` in Azure. The appsettings are set and managed directly from the AzureResourceGroup project and ARM template is run during deployment in AzureDevOps. Deploy the Azure Resources by right clicking on the AzureResourceGroup project. 
  
  - AzureResourceGroup > Deploy > New... 
  
@@ -160,22 +165,6 @@ A user interface will popup to allow you to select your Subscription and Resourc
  
  Additionally, the App Service will have the corresponding App Settings defined based on the ARM Template.
 
-## User Secrets Manager
-One of the main problems with handling secrets in .NET Core has been working locally vs deploying to production in Azure. When working locally, I am getting my secrets for accessing the KeyVault using the user secrets manager built into VS 2017. And on `Program.cs` I access the `secrets.json` and use those to request the KeyVault List of secrets. Then adding those values to the config file. 
-
-This prevents me from accidentally committing secrets to source control. I store the key vault access keys/secrets in a `secrets.json` outside of source control, and VS2017 handles the file for me. It adds a property to the .proj file pointing to the location of `secrets.jon` in `%APPADATA%`. Additional information can be found [here](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.1&tabs=windows): 
- - Solution Explorer > Right click on `StarterKit > Manage User Secrets`
-![image](https://user-images.githubusercontent.com/8311928/47606608-7e46f200-d9ca-11e8-967f-e760f80b1171.png)
- 
-We then use this area as the Key to our KeyVault.
- 
-```
-{
-  "MSI_SECRET": "[YOUR_MSI_SECRET]",
-  "MSI_ENDPOINT": "[YOUR_KEY_VAULT_URL]/",
-  "MSI_CLIENT": "[YOUR_AZURE_AD_APP_ID]",
-}
-```
 Wow. That was a lot of setup. And your right. But this setup allows you to maintain configuration in source control, without having to check-in your secrets. Your now ready to run the project locally! ::tada::
  
  # Pre-Install
@@ -197,7 +186,7 @@ These commands allow you to view the project in release mode vs local developmen
 
 
 # Deploy
-Now that we have the setup done, we can Publish the project. In my own project I've setup a CI pipeline in AzureDevOps that allows me to deploy with CI after committing to `master`. Make sure to uncomment the lines in the ARM template for MSI_SECRET. These have been commented out for easy local setup as there are quite a few steps for Azure AD and Service Principal.
+Now that we have the setup done, we can Publish the project. In my own project I've setup a CI pipeline in AzureDevOps that allows me to deploy with CI after committing to `master`. Make sure to uncomment the lines in the ARM template for ClientSecret. These have been commented out for easy local setup as there are quite a few steps for Azure AD and Service Principal.
 
 For the sake of time we will just deploy the ARM template by right clicking the AzureResourceGroup project > Deploy > New... and enter your credentials and parameter values needed. You will need to make sure you are signed into Visual Studio to ensure that you have permissions to Deploy the resources to Azure. 
 
