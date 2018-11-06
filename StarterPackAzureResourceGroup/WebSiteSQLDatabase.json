@@ -2,25 +2,25 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "tenantId": {
-      "defaultValue": "tenantId",
-      "type": "string"
+    "sqlUserName": {
+      "defaultValue": "sqlUserName",
+      "type": "securestring"
     },
-    "objectId": {
-      "defaultValue": "objectId",
-      "type": "string"
+    "sqlPassword": {
+      "defaultValue": "sqlPassword",
+      "type": "securestring"
     },
-    "applicationId": {
-      "defaultValue": "applicationId",
-      "type": "string"
+    "ClientSecret": {
+      "defaultValue": "ClientSecret",
+      "type": "securestring"
     },
-    "administratorLogin": {
-      "defaultValue": "starterpack",
-      "type": "string"
+    "ClientId": {
+      "defaultValue": "ClientId",
+      "type": "securestring"
     },
-    "appLogin": {
-      "defaultValue": "appLogin",
-      "type": "string"
+    "VaultEndpoint": {
+      "defaultValue": "VaultEndpoint",
+      "type": "securestring"
     },
     "JSStarterApp": {
       "defaultValue": "jsstarterpack",
@@ -34,8 +34,8 @@
       "defaultValue": "jsstarterpack",
       "type": "string"
     },
-    "JSStarterStorage": {
-      "defaultValue": "jsstarterpack",
+    "jssstarterblob": {
+      "defaultValue": "jsstarterblob",
       "type": "string"
     },
     "JSStarterServicePlan": {
@@ -43,65 +43,50 @@
       "type": "string"
     },
     "JSStarterSqlServer": {
-      "defaultValue": "javascriptservicesstarterpack",
+      "defaultValue": "jsstartersqlserver",
       "type": "string"
     },
     "Token--Key": {
       "defaultValue": "Token--Key",
-      "type": "string"
+      "type": "securestring"
     },
     "Token--Issuer": {
       "defaultValue": "Token--Issuer",
-      "type": "string"
+      "type": "securestring"
     },
     "MailService--Key": {
       "defaultValue": "MailService--Key",
-      "type": "string"
+      "type": "securestring"
     },
     "MailService--User": {
       "defaultValue": "MailService--User",
-      "type": "string"
+      "type": "securestring"
     },
     "BlobService--Key": {
       "defaultValue": "BlobService--Key",
-      "type": "string"
+      "type": "securestring"
     },
     "BlobService--Account": {
       "defaultValue": "BlobService--Account",
-      "type": "string"
+      "type": "securestring"
     },
     "SeedAccount--UserName": {
       "defaultValue": "SeedAccount--UserName",
-      "type": "string"
+      "type": "securestring"
     },
     "SeedAccount--Password": {
       "defaultValue": "SeedAccount--Password",
-      "type": "string"
-    },
-    "administratorLoginPassword": {
-      "defaultValue": "administratorLoginPassword",
-      "type": "string"
-    },
-    "hostNameBindings_jsstarterpack.azurewebsites.net_name": {
-      "defaultValue": "jsstarterpack.azurewebsites.net",
-      "type": "string"
+      "type": "securestring"
     },
     "ConnectionStrings--DefaultConnection": {
       "defaultValue": "ConnectionStrings--DefaultConnection",
-      "type": "string"
+      "type": "securestring"
     },
     "JSStarterSqlDB": {
-      "defaultValue": "javascriptservicesstarterpack",
-      "type": "string"
+      "defaultValue": "jsstartersqldb",
+      "type": "securestring"
     }
   },
-  "outputs": {
-    "password": {
-      "type": "securestring",
-      "value": "[parameters('administratorLoginPassword')]"
-    }
-  },
-  "variables": {},
   "resources": [
     {
       "type": "Microsoft.Insights/components",
@@ -129,11 +114,11 @@
           "family": "A",
           "name": "standard"
         },
-        "tenantId": "[parameters('tenantId')]",
+        "tenantId": "[subscription().tenantId]",
         "accessPolicies": [
           {
-            "tenantId": "[parameters('tenantId')]",
-            "objectId": "[parameters('objectId')]",
+            "tenantId": "[subscription().tenantId]",
+            "objectId": "778a718e-4dda-40af-9d3f-0f334a652b54",
             "permissions": {
               "keys": [],
               "secrets": [
@@ -302,7 +287,8 @@
       "location": "westus2",
       "apiVersion": "2014-04-01",
       "properties": {
-        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLogin": "[parameters('sqlUserName')]",
+        "administratorLoginPassword": "[parameters('sqlPassword')]"
       },
       "resources": [
         {
@@ -343,9 +329,9 @@
         "tier": "Standard"
       },
       "kind": "Storage",
-      "name": "[parameters('JSStarterStorage')]",
+      "name": "[parameters('jssstarterblob')]",
       "apiVersion": "2018-03-01-preview",
-      "location": "centralus",
+      "location": "westus2",
       "tags": {},
       "scale": null,
       "properties": {
@@ -382,7 +368,7 @@
       "kind": "app",
       "name": "[parameters('JSStarterServicePlan')]",
       "apiVersion": "2016-09-01",
-      "location": "Central US",
+      "location": "westus2",
       "scale": null,
       "properties": {
         "name": "[parameters('JSStarterServicePlan')]"
@@ -397,7 +383,7 @@
       "kind": "app",
       "name": "[parameters('JSStarterApp')]",
       "apiVersion": "2015-08-01",
-      "location": "Central US",
+      "location": "westus2",
       "identity": {
         "principalId": null,
         "tenantId": null,
@@ -449,7 +435,9 @@
             "displayName": "AppSettings"
           },
           "properties": {
-            "AzureServicesAuthConnectionString": "[parameters('appLogin')]",
+            "ClientSecret": "[parameters('ClientSecret')]",
+            "ClientId": "[parameters('ClientId')]",
+            "VaultEndpoint": "[parameters('VaultEndpoint')]",
             "WEBSITE_NODE_DEFAULT_VERSION": "8.9.4"
           }
         }

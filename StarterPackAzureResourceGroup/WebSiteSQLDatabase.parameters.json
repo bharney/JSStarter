@@ -11,46 +11,62 @@
     "JSStarterAppInsights": {
       "value": "JSStarterAppInsights"
     },
-    "JSStarterStorage": {
-      "value": "JSStarterStorage"
+    "jssstarterblob": {
+      "value": "jssstarterblob"
     },
     "JSStarterServicePlan": {
       "value": "JSStarterServicePlan"
     },
     "JSStarterSqlServer": {
-      "value": "JSStarterSqlServer"
+      "value": "jsstartersqlserver"
     },
     "JSStarterSqlDB": {
-      "value": "JSStarterSqlDB"
+      "value": "jsstartersqldb"
     },
-    "appLogin": {
+    "sqlUserName": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
-        "secretName": "appLogin"
+        "secretName": "sqlUserName"
       }
     },
-    "administratorLogin": {
+    "sqlPassword": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
-        "secretName": "administratorLogin"
+        "secretName": "sqlPassword"
       }
     },
-    "administratorLoginPassword": {
+    "ClientSecret": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
-        "secretName": "administratorLoginPassword"
+        "secretName": "ClientSecret"
+      }
+    },
+    "ClientId": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
+        },
+        "secretName": "ClientId"
+      }
+    },
+    "VaultEndpoint": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
+        },
+        "secretName": "VaultEndpoint"
       }
     },
     "Token--Key": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
         "secretName": "Token--Key"
       }
@@ -58,7 +74,7 @@
     "Token--Issuer": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
         "secretName": "Token--Issuer"
       }
@@ -66,7 +82,7 @@
     "MailService--Key": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
         "secretName": "MailService--Key"
       }
@@ -74,7 +90,7 @@
     "BlobService--Key": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
         "secretName": "BlobService--Key"
       }
@@ -82,7 +98,7 @@
     "MailService--User": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
         "secretName": "MailService--User"
       }
@@ -90,7 +106,7 @@
     "BlobService--Account": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
         "secretName": "BlobService--Account"
       }
@@ -98,7 +114,7 @@
     "SeedAccount--UserName": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
         "secretName": "SeedAccount--UserName"
       }
@@ -106,7 +122,7 @@
     "SeedAccount--Password": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
         "secretName": "SeedAccount--Password"
       }
@@ -114,7 +130,7 @@
     "ConnectionStrings--DefaultConnection": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/[parameters('JSStarterVault')]"
+          "id": "/subscriptions/f9344551-eed5-47b3-a8f4-46fa282af927/resourceGroups/JSStarter/providers/Microsoft.KeyVault/vaults/JSStarterVault"
         },
         "secretName": "ConnectionStrings--DefaultConnection"
       }
