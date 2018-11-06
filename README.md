@@ -45,7 +45,7 @@ Before we can create the KeyVault we need a Resource Group. Which is just a logi
 
 ```
 $ResourceGroupName = 'JSStarter'
-$ResourceGroupLocation = 'Central US'
+$ResourceGroupLocation = 'West US 2'
 
 New-AzureRmResourceGroup $ResourceGroupName $ResourceGroupLocation
 ```
@@ -84,15 +84,13 @@ $appName = "JSStarter"
 $appURI = "https://www.jsstarter.azurewebsites.net"
 $appHomePageUrl = "https://JSStarter.azurewebsites.net"
 $appReplyURLs = @($appURI, $appHomePageURL, "https://localhost:5000")
-if(!($myApp = Get-AzureADApplication -Filter "DisplayName eq '$($appName)'"  -ErrorAction SilentlyContinue))
-{
-    $myApp = New-AzureADApplication -DisplayName $appName -IdentifierUris $appURI -Homepage $appHomePageUrl -ReplyUrls $appReplyURLs   
-}
+New-AzureADApplication -DisplayName $appName -IdentifierUris $appURI -Homepage $appHomePageUrl -ReplyUrls $appReplyURLs   
+
 ```
 Copy and Paste the Application Id into your `secrets.json` file for the `ClientId` value. 
 
 ## Generate ClientSecret
-Once the App is registered we will need to get our KeyVaults ObjectId to add an Application Key. This is a randomly generated Guid that will be used by the application to access the KeyVault. Run the command below making sure to populate the value with your KeyVaults `ObjectId`
+Once the App is registered we will need to get our Application Registration ObjectId. We will use this to generate credentials for AD to use as an Application Key. This is a randomly generated Guid that will be used by the application to access the KeyVault. Run the command below making sure to populate the value with your Application `ObjectId`
 
 ```
 New-AzureADApplicationPasswordCredential -ObjectId "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
@@ -142,7 +140,7 @@ function Get-ObjectMembers {
         [PSCustomObject]@{Key = $key; Value = $obj."$key"}
     }
 }
-	$secrets = Get-Content secrets.json
+	$secrets = Get-Content $env:APPDATA\Microsoft\UserSecrets\["YOUR_SECRET_GUID"]\secrets.json
 	$secrets | ConvertFrom-Json | Get-ObjectMembers | foreach {
 	   $secretvalue = ConvertTo-SecureString $_.Value -AsPlainText -Force
    	   Set-AzureKeyVaultSecret -VaultName $keyVaultName -Name $_.Key -SecretValue $secretvalue
@@ -162,10 +160,11 @@ A user interface will popup to allow you to select your Subscription and Resourc
  - SQL DB
  - Key Vault
  - Blob Storage
+ - Send Grid(comming soon)
  
  Additionally, the App Service will have the corresponding App Settings defined based on the ARM Template.
 
-Wow. That was a lot of setup. And your right. But this setup allows you to maintain configuration in source control, without having to check-in your secrets. Your now ready to run the project locally! ::tada::
+Wow. That was a lot of setup. And your right. But this setup allows you to maintain configuration in source control, without having to check-in your secrets. Your now ready to run the project locally! :tada:
  
  # Pre-Install
  Install Webpack
