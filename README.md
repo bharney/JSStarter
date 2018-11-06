@@ -166,6 +166,13 @@ A user interface will popup to allow you to select your Subscription and Resourc
 
 Wow. That was a lot of setup. And your right. But this setup allows you to maintain configuration in source control, without having to check-in your secrets. Your now ready to run the project locally! :tada:
  
+ # Entity Framework Database Migration
+ We now have an Azure Sql Server, and DB. But we need to get the database tables and Seed Data into it. Start by running the Entity Framework Core migrations.
+ 
+ ```
+ dotnet ef database update
+ ```
+ 
  # Pre-Install
  Install Webpack
  - `npm install webpack webpack-cli node-sass -g`
@@ -185,13 +192,6 @@ These commands allow you to view the project in release mode vs local developmen
 
 
 # Deploy
-Now that we have the setup done, we can Publish the project. In my own project I've setup a CI pipeline in AzureDevOps that allows me to deploy with CI after committing to `master`. Make sure to uncomment the lines in the ARM template for ClientSecret. These have been commented out for easy local setup as there are quite a few steps for Azure AD and Service Principal.
+Now that we have the setup done, we can Publish the project. In my own project I've setup a CI pipeline in AzureDevOps that allows me to deploy with CI after committing to `master`. But for the sake of wrapping this up. The final step is to publish. You can publish via PowerShell by downloading your publish settings file. [See more information about how to do that here](https://docs.microsoft.com/en-us/azure/vs-azure-tools-publishing-using-powershell-scripts). You will need to make sure you are signed into Visual Studio to ensure that you have permissions to Deploy the resources to Azure. The easy option is to right click the Project > Publish... It will ask you for a publish target and you follow the GUI to deploy your Application to Azure App Service.
 
-For the sake of time we will just deploy the ARM template by right clicking the AzureResourceGroup project > Deploy > New... and enter your credentials and parameter values needed. You will need to make sure you are signed into Visual Studio to ensure that you have permissions to Deploy the resources to Azure. 
-
-Once that completes we will run the migration to ensure your DB has been updated. [See more information about EF migrations here](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/)
-
-```
-dotnet ef database update
-```
-The final step is to publish. You can publish via PowerShell by downloading your publish settings file. [See more information about how to do that here](https://docs.microsoft.com/en-us/azure/vs-azure-tools-publishing-using-powershell-scripts). The easy option is to right click the Project > Publish... It will ask you for a publish target and you follow the GUI to deploy your Application to Azure App Service.
+You should be able to navigate to the azurewebsites.net URL and your up and running!
