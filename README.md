@@ -167,7 +167,7 @@ A user interface will popup to allow you to select your Subscription and Resourc
 Wow. That was a lot of setup. And your right. But this setup allows you to maintain configuration in source control, without having to check-in your secrets. Your now ready to run the project locally! :tada:
  
  # Entity Framework Database Migration
- We now have an Azure Sql Server, and DB. But we need to get the database tables and Seed Data into it. Start by running the Entity Framework Core migrations.
+We now have an Azure Sql Server, and DB. But we need to get the database tables and Seed Data into it. Start by running application locally. The program startup checks if there are any pending migrations required, and runs the migration if needed. It should handle automatic migrations. Optionally, you can run them manually with command below. However, you will need to make sure you add your connectionString to the appsettings file if you wan to run it manaully.
  
  ```
  dotnet ef database update
