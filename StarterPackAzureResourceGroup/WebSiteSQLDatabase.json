@@ -85,6 +85,14 @@
     "JSStarterSqlDB": {
       "defaultValue": "jsstartersqldb",
       "type": "securestring"
+    },
+    "location": {
+      "defaultValue": "westus2",
+      "type": "string"
+    },
+    "websiteUrl": {
+      "defaultValue": "jsstarter.azurewebsites.net",
+      "type": "string"
     }
   },
   "resources": [
@@ -93,7 +101,7 @@
       "kind": "web",
       "name": "[parameters('JSStarterAppInsights')]",
       "apiVersion": "2015-05-01",
-      "location": "westus2",
+      "location": "[parameters('location')]",
       "scale": null,
       "properties": {
         "Application_Type": "web",
@@ -106,7 +114,7 @@
       "type": "Microsoft.KeyVault/vaults",
       "name": "[parameters('JSStarterVault')]",
       "apiVersion": "2016-10-01",
-      "location": "westus2",
+      "location": "[parameters('location')]",
       "tags": {},
       "scale": null,
       "properties": {
@@ -118,7 +126,8 @@
         "accessPolicies": [
           {
             "tenantId": "[subscription().tenantId]",
-            "objectId": "778a718e-4dda-40af-9d3f-0f334a652b54",
+            "objectId": "1bf05d39-27ce-4a0f-b24a-f288ecbfed29",
+            "applicationId": "65049b3a-2d23-46b2-b7bd-abd01f9ede8e",
             "permissions": {
               "keys": [],
               "secrets": [
@@ -139,7 +148,7 @@
           "type": "secrets",
           "name": "SeedAccount--UserName",
           "apiVersion": "2016-10-01",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -155,7 +164,7 @@
           "type": "secrets",
           "name": "Token--Key",
           "apiVersion": "2016-10-01",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -171,7 +180,7 @@
           "type": "secrets",
           "name": "Token--Issuer",
           "apiVersion": "2016-10-01",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -187,7 +196,7 @@
           "type": "secrets",
           "name": "MailService--User",
           "apiVersion": "2016-10-01",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -203,7 +212,7 @@
           "type": "secrets",
           "name": "SeedAccount--Password",
           "apiVersion": "2016-10-01",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -219,7 +228,7 @@
           "type": "secrets",
           "name": "ConnectionStrings--DefaultConnection",
           "apiVersion": "2016-10-01",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -235,7 +244,7 @@
           "type": "secrets",
           "name": "MailService--Key",
           "apiVersion": "2016-10-01",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -251,7 +260,7 @@
           "type": "secrets",
           "name": "BlobService--Account",
           "apiVersion": "2016-10-01",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -267,7 +276,7 @@
           "type": "secrets",
           "name": "BlobService--Key",
           "apiVersion": "2016-10-01",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -284,7 +293,7 @@
     {
       "name": "[parameters('JSStarterSqlServer')]",
       "type": "Microsoft.Sql/servers",
-      "location": "westus2",
+      "location": "[parameters('location')]",
       "apiVersion": "2014-04-01",
       "properties": {
         "administratorLogin": "[parameters('sqlUserName')]",
@@ -295,7 +304,7 @@
           "name": "[parameters('JSStarterSqlDB')]",
           "kind": "v12.0,user",
           "type": "databases",
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "properties": {
             "collation": "SQL_Latin1_General_CP1_CI_AS",
             "maxSizeBytes": "2147483648",
@@ -313,7 +322,7 @@
           "dependsOn": [
             "[resourceId('Microsoft.Sql/servers/', parameters('JSStarterSqlServer'))]"
           ],
-          "location": "westus2",
+          "location": "[parameters('location')]",
           "name": "AllowAppFirewallIps",
           "properties": {
             "endIpAddress": "0.0.0.0",
@@ -331,7 +340,7 @@
       "kind": "Storage",
       "name": "[parameters('jssstarterblob')]",
       "apiVersion": "2018-03-01-preview",
-      "location": "westus2",
+      "location": "[parameters('location')]",
       "tags": {},
       "scale": null,
       "properties": {
@@ -368,7 +377,7 @@
       "kind": "app",
       "name": "[parameters('JSStarterServicePlan')]",
       "apiVersion": "2016-09-01",
-      "location": "westus2",
+      "location": "[parameters('location')]",
       "scale": null,
       "properties": {
         "name": "[parameters('JSStarterServicePlan')]"
@@ -383,7 +392,7 @@
       "kind": "app",
       "name": "[parameters('JSStarterApp')]",
       "apiVersion": "2015-08-01",
-      "location": "westus2",
+      "location": "[parameters('location')]",
       "identity": {
         "principalId": null,
         "tenantId": null,
@@ -442,6 +451,27 @@
           }
         }
       ]
+    },
+    {
+      "apiVersion": "2015-01-01",
+      "name": "[parameters('JSStarterApp')]",
+      "type": "Sendgrid.Email/accounts",
+      "location": "[parameters('location')]",
+      "plan": {
+        "name": "free",
+        "publisher": "Sendgrid",
+        "product": "sendgrid_azure",
+        "promotionCode": ""
+      },
+      "properties": {
+        "password": "[parameters('sqlPassword')]",
+        "acceptMarketingEmails": true,
+        "email": "[concat('info@', parameters('JSStarterApp'), '.com')]",
+        "firstName": "[parameters('JSStarterApp')]",
+        "lastName": "[parameters('JSStarterApp')]",
+        "company": "[parameters('JSStarterApp')]",
+        "website": "[parameters('websiteUrl')]"
+      }
     }
   ]
 }

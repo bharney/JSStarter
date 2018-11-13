@@ -5,6 +5,12 @@
     "JSStarterApp": {
       "value": "JSStarterApp"
     },
+    "location": {
+      "value": "westus2"
+    },
+    "websiteUrl": {
+      "value": "jsstarter.azurewebsites.net"
+    },
     "JSStarterVault": {
       "value": "JSStarterVault"
     },
