@@ -10,6 +10,18 @@
       "defaultValue": "sqlPassword",
       "type": "securestring"
     },
+    "ADUserObjectId": {
+      "defaultValue": "abae750d-fbde-4339-9a5d-d101c988b5ed",
+      "type": "securestring"
+    },
+    "applicationId": {
+      "defaultValue": "83b384eb-caa3-4602-887c-5496aeab7996",
+      "type": "securestring"
+    },
+    "objectId": {
+      "defaultValue": "5914cdd2-1579-49fa-a2cd-bf40aa2fb8de",
+      "type": "securestring"
+    },
     "ClientSecret": {
       "defaultValue": "ClientSecret",
       "type": "securestring"
@@ -126,13 +138,26 @@
         "accessPolicies": [
           {
             "tenantId": "[subscription().tenantId]",
-            "objectId": "1bf05d39-27ce-4a0f-b24a-f288ecbfed29",
-            "applicationId": "65049b3a-2d23-46b2-b7bd-abd01f9ede8e",
+            "objectId": "[parameters('objectId')]",
+            "applicationId": "[parameters('applicationId')]",
             "permissions": {
               "keys": [],
               "secrets": [
                 "get",
                 "list"
+              ],
+              "certificates": []
+            }
+          },
+          {
+            "tenantId": "[subscription().tenantId]",
+            "objectId": "[parameters('ADUserObjectId')]",
+            "permissions": {
+              "keys": [],
+              "secrets": [
+                "get",
+                "list",
+                "set"
               ],
               "certificates": []
             }
