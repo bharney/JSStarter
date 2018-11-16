@@ -2,41 +2,41 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "JSStarterApp": {
-      "value": "JSStarterApp"
+    "ResourceGroupName": {
+      "value": null
     },
-    "location": {
-      "value": "westus2"
-    },
-    "websiteUrl": {
-      "value": "jsstarter.azurewebsites.net"
-    },
-    "JSStarterVault": {
-      "value": "JSStarterVault"
-    },
-    "JSStarterAppInsights": {
-      "value": "JSStarterAppInsights"
-    },
-    "jssstarterblob": {
-      "value": "jssstarterblob"
-    },
-    "JSStarterServicePlan": {
-      "value": "JSStarterServicePlan"
-    },
-    "JSStarterSqlServer": {
-      "value": "jsstartersqlserver"
-    },
-    "JSStarterSqlDB": {
-      "value": "jsstartersqldb"
+    "ResourceGroupLocation": {
+      "value": null
     },
     "ADUserObjectId": {
-      "value": "abae750d-fbde-4339-9a5d-d101c988b5ed"
+      "value": null
     },
-    "applicationId": {
-      "value": "83b384eb-caa3-4602-887c-5496aeab7996"
+    "SPObjectId": {
+      "value": null
     },
-    "objectId": {
-      "value": "5914cdd2-1579-49fa-a2cd-bf40aa2fb8de"
+    "AppName": {
+      "value": null
+    },
+    "WebsiteUrl": {
+      "value": null
+    },
+    "JSStarterVault": {
+      "value": null
+    },
+    "JSStarterAppInsights": {
+      "value": null
+    },
+    "jssstarterblob": {
+      "value": null
+    },
+    "JSStarterServicePlan": {
+      "value": null
+    },
+    "JSStarterSqlServer": {
+      "value": null
+    },
+    "JSStarterSqlDB": {
+      "value": null
     },
     "sqlUserName": {
       "reference": {
