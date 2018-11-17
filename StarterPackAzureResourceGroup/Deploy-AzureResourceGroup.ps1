@@ -1,8 +1,6 @@
 Param(
-    [string] [Parameter(Mandatory=$true)] $ResourceGroupLocation = "West US 2",
+    [string] [Parameter(Mandatory=$true)] $ResourceGroupLocation = "westus2",
     [string] $ResourceGroupName = "jsstarter",
-	[string] $ADUserObjectId,
-	[string] $SPObjectId,
     [switch] $UploadArtifacts,
     [string] $StorageAccountName,
     [string] $StorageContainerName = $ResourceGroupName.ToLowerInvariant() + '-stageartifacts',
@@ -89,8 +87,7 @@ if ($UploadArtifacts) {
     }
 }
 
-# Create or update the resource group using the specified template file and template parameters file
-New-AzureRmResourceGroup -Name $ResourceGroupName -Location $ResourceGroupLocation -Verbose -Force
+
     
 if ($ValidateOnly) {
     $ErrorMessages = Format-ValidationOutput (Test-AzureRmResourceGroupDeployment -ResourceGroupName $ResourceGroupName `
@@ -105,37 +102,9 @@ if ($ValidateOnly) {
     }
 }
 else {
-
-    ############ Connect to Azure Subscription Context #############
-    #Connect-AzureRmAccount
-    #
-    ##if you have multiple subscriptions you will need to include this
-    #Get-AzureRmSubscription | Where-Object {$_.Name -eq "Brian Harney"} | Set-AzureRmContext
- 	#
-    ########### Connect to AD #########
-    #$TenantId = Get-AzureRmSubscription | Where-Object {$_.Name -eq "Brian Harney"} | Select-Object -Property TenantId
-    #Connect-AzureAD -TenantId $TenantId.TenantId
-    
-    #Write-Host "tenantId: $TenantId"
-    # Obtain the security identifier(SID) of the active directory user
-    $ADUserObjectId =  (Get-AzureADUser)[0].ObjectId
-    Write-Host "getting AD user $ADUserObjectId..."
-    # ResourceGroup exist
-    $appName = -join("$ResourceGroupName","app")
-    Write-Host "getting the service principal for  $appName..."
-	
-    $appId = Get-AzureRmADApplication -DisplayNameStartWith $appName | Select-Object -Property ApplicationId
-    Write-Host "ApplicationId: $appId"
-	$appId = $appId.ApplicationId.Guid
-
-    Write-Host "Guid: $appId"
-    $servicePrincipal = (Get-AzureRmADServicePrincipal –SearchString $appName)[0].Id.Guid
-    Write-Host "Service principal: $servicePrincipal"
-	
-	$OptionalParameters['ADUserObjectId'] = $ADUserObjectId
-	$OptionalParameters['SPObjectId'] = $servicePrincipal
-
-	#Pass ARM template with correct access policies for Azure AD Application ObjectId, and AD User objectId
+	#run setup script before New-AzureRmResourceGroupDeployment
+	#
+	#ARM template with correct access policies for Azure AD Application ObjectId, and AD User objectId
     New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
                                        -ResourceGroupName $ResourceGroupName `
                                        -TemplateFile $TemplateFile `
