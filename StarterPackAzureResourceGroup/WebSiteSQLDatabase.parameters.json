@@ -3,39 +3,15 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "ResourceGroupName": {
-      "value": null
+      "value": "jsstarter"
     },
     "ResourceGroupLocation": {
-      "value": null
+      "value": "West US 2"
     },
     "ADUserObjectId": {
       "value": null
     },
     "SPObjectId": {
-      "value": null
-    },
-    "AppName": {
-      "value": null
-    },
-    "WebsiteUrl": {
-      "value": null
-    },
-    "JSStarterVault": {
-      "value": null
-    },
-    "JSStarterAppInsights": {
-      "value": null
-    },
-    "jssstarterblob": {
-      "value": null
-    },
-    "JSStarterServicePlan": {
-      "value": null
-    },
-    "JSStarterSqlServer": {
-      "value": null
-    },
-    "JSStarterSqlDB": {
       "value": null
     },
     "sqlUserName": {
