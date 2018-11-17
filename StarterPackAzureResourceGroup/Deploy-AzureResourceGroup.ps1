@@ -1,6 +1,6 @@
 Param(
-    [string] [Parameter(Mandatory=$true)] $ResourceGroupLocation,
-    [string] $ResourceGroupName = 'JSStarter',
+    [string] [Parameter(Mandatory=$true)] $ResourceGroupLocation = "westus2",
+    [string] $ResourceGroupName = "jsstarter",
     [switch] $UploadArtifacts,
     [string] $StorageAccountName,
     [string] $StorageContainerName = $ResourceGroupName.ToLowerInvariant() + '-stageartifacts',
@@ -87,9 +87,8 @@ if ($UploadArtifacts) {
     }
 }
 
-# Create or update the resource group using the specified template file and template parameters file
-New-AzureRmResourceGroup -Name $ResourceGroupName -Location $ResourceGroupLocation -Verbose -Force
 
+    
 if ($ValidateOnly) {
     $ErrorMessages = Format-ValidationOutput (Test-AzureRmResourceGroupDeployment -ResourceGroupName $ResourceGroupName `
                                                                                   -TemplateFile $TemplateFile `
@@ -103,11 +102,14 @@ if ($ValidateOnly) {
     }
 }
 else {
+	#run setup script before New-AzureRmResourceGroupDeployment
+	#
+	#ARM template with correct access policies for Azure AD Application ObjectId, and AD User objectId
     New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
                                        -ResourceGroupName $ResourceGroupName `
                                        -TemplateFile $TemplateFile `
                                        -TemplateParameterFile $TemplateParametersFile `
-                                       @OptionalParameters `
+									   @OptionalParameters `
                                        -Force -Verbose `
                                        -ErrorVariable ErrorMessages
     if ($ErrorMessages) {

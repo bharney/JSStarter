@@ -2,26 +2,17 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "JSStarterApp": {
-      "value": "JSStarterApp"
+    "ResourceGroupName": {
+      "value": "jsstarter"
     },
-    "JSStarterVault": {
-      "value": "JSStarterVault"
+    "ResourceGroupLocation": {
+      "value": "West US 2"
     },
-    "JSStarterAppInsights": {
-      "value": "JSStarterAppInsights"
+    "ADUserObjectId": {
+      "value": "abae750d-fbde-4339-9a5d-d101c988b5ed"
     },
-    "jssstarterblob": {
-      "value": "jssstarterblob"
-    },
-    "JSStarterServicePlan": {
-      "value": "JSStarterServicePlan"
-    },
-    "JSStarterSqlServer": {
-      "value": "jsstartersqlserver"
-    },
-    "JSStarterSqlDB": {
-      "value": "jsstartersqldb"
+    "SPObjectId": {
+      "value": "44e08e63-177a-4387-a744-00526e306518"
     },
     "sqlUserName": {
       "reference": {
