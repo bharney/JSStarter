@@ -2,12 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "ResourceGroupName": {
-      "type": "string"
-    },
-    "ResourceGroupLocation": {
-      "type": "string"
-    },
     "ADUserObjectId": {
       "type": "string"
     },
@@ -58,21 +52,21 @@
     }
   },
   "variables": {
-    "websiteUrl": "[concat('https://www.', parameters('ResourceGroupName'), '.azurewebsites.net')]",
-    "AppName": "[concat(parameters('ResourceGroupName'), 'app')]",
-    "Vault": "[concat(parameters('ResourceGroupName'), 'vault')]",
-    "AppInsights": "[concat(parameters('ResourceGroupName'), 'appinsights')]",
-    "Blob": "[concat(parameters('ResourceGroupName'), 'blob')]",
-    "ServicePlan": "[concat(parameters('ResourceGroupName'), 'plan')]",
-    "SqlServer": "[concat(parameters('ResourceGroupName'), 'sqlserver')]",
-    "SqlDB": "[concat(parameters('ResourceGroupName'), 'DB')]"
+    "websiteUrl": "[concat('https://www.', resourceGroup().name, '.azurewebsites.net')]",
+    "AppName": "[concat(resourceGroup().name, 'app')]",
+    "Vault": "[concat(resourceGroup().name, 'vault')]",
+    "AppInsights": "[concat(resourceGroup().name, 'appinsights')]",
+    "Blob": "[concat(resourceGroup().name, 'blob')]",
+    "ServicePlan": "[concat(resourceGroup().name, 'plan')]",
+    "SqlServer": "[concat(resourceGroup().name, 'sqlserver')]",
+    "SqlDB": "[concat(resourceGroup().name, 'DB')]"
   },
   "resources": [
     {
       "name": "[variables('AppInsights')]",
       "type": "Microsoft.Insights/components",
       "apiVersion": "2015-05-01",
-      "location": "[parameters('ResourceGroupLocation')]",
+      "location": "[resourceGroup().location]",
       "kind": "web",
       "properties": {
         "Application_Type": "web"
@@ -82,7 +76,7 @@
       "type": "Microsoft.KeyVault/vaults",
       "name": "[variables('Vault')]",
       "apiVersion": "2016-10-01",
-      "location": "[parameters('ResourceGroupLocation')]",
+      "location": "[resourceGroup().location]",
       "tags": {},
       "scale": null,
       "properties": {
@@ -128,7 +122,7 @@
           "type": "secrets",
           "name": "SeedAccount--UserName",
           "apiVersion": "2016-10-01",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -144,7 +138,7 @@
           "type": "secrets",
           "name": "Token--Key",
           "apiVersion": "2016-10-01",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -160,7 +154,7 @@
           "type": "secrets",
           "name": "Token--Issuer",
           "apiVersion": "2016-10-01",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -176,7 +170,7 @@
           "type": "secrets",
           "name": "MailService--User",
           "apiVersion": "2016-10-01",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -192,7 +186,7 @@
           "type": "secrets",
           "name": "SeedAccount--Password",
           "apiVersion": "2016-10-01",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -208,7 +202,7 @@
           "type": "secrets",
           "name": "ConnectionStrings--DefaultConnection",
           "apiVersion": "2016-10-01",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -224,7 +218,7 @@
           "type": "secrets",
           "name": "MailService--Key",
           "apiVersion": "2016-10-01",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -240,7 +234,7 @@
           "type": "secrets",
           "name": "BlobService--Account",
           "apiVersion": "2016-10-01",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -256,7 +250,7 @@
           "type": "secrets",
           "name": "BlobService--Key",
           "apiVersion": "2016-10-01",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "scale": null,
           "properties": {
             "attributes": {
@@ -273,7 +267,7 @@
     {
       "name": "[variables('SqlServer')]",
       "type": "Microsoft.Sql/servers",
-      "location": "[parameters('ResourceGroupLocation')]",
+      "location": "[resourceGroup().location]",
       "apiVersion": "2014-04-01",
       "properties": {
         "administratorLogin": "[parameters('sqlUserName')]",
@@ -284,7 +278,7 @@
           "name": "[variables('SqlDB')]",
           "kind": "v12.0,user",
           "type": "databases",
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "properties": {
             "collation": "SQL_Latin1_General_CP1_CI_AS",
             "maxSizeBytes": "2147483648",
@@ -302,7 +296,7 @@
           "dependsOn": [
             "[resourceId('Microsoft.Sql/servers/', variables('SqlServer'))]"
           ],
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "name": "AllowAppFirewallIps",
           "properties": {
             "endIpAddress": "0.0.0.0",
@@ -315,7 +309,7 @@
           "dependsOn": [
             "[resourceId('Microsoft.Sql/servers/', variables('SqlServer'))]"
           ],
-          "location": "[parameters('ResourceGroupLocation')]",
+          "location": "[resourceGroup().location]",
           "name": "AllowLocalIpAddress",
           "properties": {
             "startIpAddress": "71.198.42.196",
@@ -333,7 +327,7 @@
       "kind": "Storage",
       "name": "[variables('Blob')]",
       "apiVersion": "2018-03-01-preview",
-      "location": "[parameters('ResourceGroupLocation')]",
+      "location": "[resourceGroup().location]",
       "tags": {},
       "scale": null,
       "properties": {
@@ -370,7 +364,7 @@
       "kind": "app",
       "name": "[variables('ServicePlan')]",
       "apiVersion": "2016-09-01",
-      "location": "[parameters('ResourceGroupLocation')]",
+      "location": "[resourceGroup().location]",
       "scale": null,
       "properties": {
         "name": "[variables('ServicePlan')]"
@@ -385,7 +379,7 @@
       "kind": "app",
       "name": "[variables('AppName')]",
       "apiVersion": "2015-08-01",
-      "location": "[parameters('ResourceGroupLocation')]",
+      "location": "[resourceGroup().location]",
       "identity": {
         "principalId": null,
         "tenantId": null,
@@ -449,7 +443,7 @@
       "apiVersion": "2015-01-01",
       "name": "[variables('AppName')]",
       "type": "Sendgrid.Email/accounts",
-      "location": "[parameters('ResourceGroupLocation')]",
+      "location": "[resourceGroup().location]",
       "plan": {
         "name": "free",
         "publisher": "Sendgrid",

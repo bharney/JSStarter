@@ -2,12 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "ResourceGroupName": {
-      "value": "jsstarter"
-    },
-    "ResourceGroupLocation": {
-      "value": "West US 2"
-    },
     "ADUserObjectId": {
       "value": "abae750d-fbde-4339-9a5d-d101c988b5ed"
     },
