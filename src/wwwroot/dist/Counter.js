@@ -1,0 +1,16 @@
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["Counter"],{
+
+/***/ "./ClientApp/src/components/Counter/Counter.tsx":
+/*!******************************************************!*\
+  !*** ./ClientApp/src/components/Counter/Counter.tsx ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ \"./node_modules/@babel/runtime/helpers/inheritsLoose.js\");\n/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ \"./node_modules/react-redux/es/index.js\");\n/* harmony import */ var _store_Counter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/Counter */ \"./ClientApp/src/store/Counter.ts\");\n\n\n\n\n\nvar Counter =\n/*#__PURE__*/\nfunction (_React$Component) {\n  _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default()(Counter, _React$Component);\n\n  function Counter() {\n    return _React$Component.apply(this, arguments) || this;\n  }\n\n  var _proto = Counter.prototype;\n\n  _proto.render = function render() {\n    var _this = this;\n\n    return react__WEBPACK_IMPORTED_MODULE_1__[\"createElement\"](\"div\", null, react__WEBPACK_IMPORTED_MODULE_1__[\"createElement\"](\"h1\", null, \"Counter\"), react__WEBPACK_IMPORTED_MODULE_1__[\"createElement\"](\"p\", null, \"This is a simple example of a React component.\"), react__WEBPACK_IMPORTED_MODULE_1__[\"createElement\"](\"p\", null, \"Current count: \", react__WEBPACK_IMPORTED_MODULE_1__[\"createElement\"](\"strong\", null, this.props.count)), react__WEBPACK_IMPORTED_MODULE_1__[\"createElement\"](\"button\", {\n      onClick: function onClick() {\n        _this.props.increment();\n      }\n    }, \"Increment\"));\n  };\n\n  return Counter;\n}(react__WEBPACK_IMPORTED_MODULE_1__[\"Component\"]); // Wire up the React component to the Redux store\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__[\"connect\"])(function (state) {\n  return state.counter;\n}, // Selects which state properties are merged into the component's props\n_store_Counter__WEBPACK_IMPORTED_MODULE_3__[\"actionCreators\"] // Selects which action creators are merged into the component's props\n)(Counter));\n\n//# sourceURL=webpack:///./ClientApp/src/components/Counter/Counter.tsx?");
+
+/***/ })
+
+}]);
+//# sourceMappingURL=Counter.js.map

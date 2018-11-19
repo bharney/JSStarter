@@ -1,9 +1,9 @@
 ﻿Param(
-    [string] [Parameter(Mandatory=$true)] $ResourceGroupLocation = "West US 2",
+    [string] $ResourceGroupLocation = "West US 2",
     [string] [Parameter(Mandatory=$true)] $ResourceGroupName = "jsstarter",
-    [string] [Parameter(Mandatory=$true)] $secretsGuid = "xxxxxxxxx-xxxx-xxxxx-xxxx-xxxxxxxxxx",
-    [string] $TemplateFile = './WebSiteSQLDatabase.json',
-    [string] $TemplateParametersFile = './WebSiteSQLDatabase.parameters.json'
+    [string] $secretsGuid = 'f986c0ad-1451-4764-ab20-4f8fb8512e46',
+    [string] $TemplateFile = '../deploy/WebSiteSQLDatabase.json',
+    [string] $TemplateParametersFile = '../deploy/WebSiteSQLDatabase.parameters.json'
 )
 
 try {
@@ -46,7 +46,7 @@ Get-AzureRmSubscription | Where-Object {$_.Name -eq "Brian Harney"} | Set-AzureR
 ########## Connect to AD #########
 $TenantId = Get-AzureRmSubscription | Where-Object {$_.Name -eq "Brian Harney"} | Select-Object -Property TenantId
 $TenantId = $TenantId.TenantId
-Connect-AzureAD -TenantId $TenantId.TenantId
+Connect-AzureAD -TenantId $TenantId
 #Write-Host "tenantId: $TenantId"
 # Obtain the security identifier(SID) of the active directory user
 $ADUserObjectId =  (Get-AzureADUser)[0].ObjectId

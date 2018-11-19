@@ -1,0 +1,28 @@
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["NotFound"],{
+
+/***/ "./ClientApp/src/components/NotFound/NotFound.tsx":
+/*!********************************************************!*\
+  !*** ./ClientApp/src/components/NotFound/NotFound.tsx ***!
+  \********************************************************/
+/*! exports provided: NotFound, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"NotFound\", function() { return NotFound; });\n/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ \"./node_modules/@babel/runtime/helpers/inheritsLoose.js\");\n/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _fortawesome_free_solid_svg_icons_faBomb__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons/faBomb */ \"./node_modules/@fortawesome/free-solid-svg-icons/faBomb.js\");\n/* harmony import */ var _fortawesome_free_solid_svg_icons_faBomb__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_fortawesome_free_solid_svg_icons_faBomb__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ \"./node_modules/@fortawesome/react-fontawesome/index.es.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);\n\n\n\n\nvar NotFound =\n/*#__PURE__*/\nfunction (_React$Component) {\n  _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default()(NotFound, _React$Component);\n\n  function NotFound() {\n    return _React$Component.apply(this, arguments) || this;\n  }\n\n  var _proto = NotFound.prototype;\n\n  _proto.render = function render() {\n    return react__WEBPACK_IMPORTED_MODULE_3__[\"createElement\"](\"section\", {\n      className: \"pt-5 container\"\n    }, react__WEBPACK_IMPORTED_MODULE_3__[\"createElement\"](\"div\", {\n      className: \"row justify-content-center pt-4\"\n    }, react__WEBPACK_IMPORTED_MODULE_3__[\"createElement\"](\"div\", {\n      className: \"col-12 col-sm-8 col-lg-7 text-center\"\n    }, react__WEBPACK_IMPORTED_MODULE_3__[\"createElement\"](\"h2\", {\n      className: \"display-4\"\n    }, \"Page Not Found.\"), react__WEBPACK_IMPORTED_MODULE_3__[\"createElement\"](\"p\", {\n      className: \"pt-3 pb-3 lead\"\n    }, \"Ops. Sorry, something must have gone wrong, or we could not find the page you were looking for.\"), react__WEBPACK_IMPORTED_MODULE_3__[\"createElement\"](_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__[\"FontAwesomeIcon\"], {\n      className: \"mt-3 mb-3\",\n      icon: _fortawesome_free_solid_svg_icons_faBomb__WEBPACK_IMPORTED_MODULE_1__[\"faBomb\"],\n      size: \"3x\"\n    }))));\n  };\n\n  return NotFound;\n}(react__WEBPACK_IMPORTED_MODULE_3__[\"Component\"]);\n/* harmony default export */ __webpack_exports__[\"default\"] = (NotFound);\n\n//# sourceURL=webpack:///./ClientApp/src/components/NotFound/NotFound.tsx?");
+
+/***/ }),
+
+/***/ "./node_modules/@fortawesome/free-solid-svg-icons/faBomb.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@fortawesome/free-solid-svg-icons/faBomb.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, '__esModule', { value: true });\nvar prefix = 'fas';\nvar iconName = 'bomb';\nvar width = 512;\nvar height = 512;\nvar ligatures = [];\nvar unicode = 'f1e2';\nvar svgPathData = 'M440.5 88.5l-52 52L415 167c9.4 9.4 9.4 24.6 0 33.9l-17.4 17.4c11.8 26.1 18.4 55.1 18.4 85.6 0 114.9-93.1 208-208 208S0 418.9 0 304 93.1 96 208 96c30.5 0 59.5 6.6 85.6 18.4L311 97c9.4-9.4 24.6-9.4 33.9 0l26.5 26.5 52-52 17.1 17zM500 60h-24c-6.6 0-12 5.4-12 12s5.4 12 12 12h24c6.6 0 12-5.4 12-12s-5.4-12-12-12zM440 0c-6.6 0-12 5.4-12 12v24c0 6.6 5.4 12 12 12s12-5.4 12-12V12c0-6.6-5.4-12-12-12zm33.9 55l17-17c4.7-4.7 4.7-12.3 0-17-4.7-4.7-12.3-4.7-17 0l-17 17c-4.7 4.7-4.7 12.3 0 17 4.8 4.7 12.4 4.7 17 0zm-67.8 0c4.7 4.7 12.3 4.7 17 0 4.7-4.7 4.7-12.3 0-17l-17-17c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l17 17zm67.8 34c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l17 17c4.7 4.7 12.3 4.7 17 0 4.7-4.7 4.7-12.3 0-17l-17-17zM112 272c0-35.3 28.7-64 64-64 8.8 0 16-7.2 16-16s-7.2-16-16-16c-52.9 0-96 43.1-96 96 0 8.8 7.2 16 16 16s16-7.2 16-16z';\n\nexports.definition = {           \n  prefix: prefix,\n  iconName: iconName,\n  icon: [\n    width,\n    height,\n    ligatures,\n    unicode,\n    svgPathData\n  ]};\n  \nexports.faBomb = exports.definition;           \nexports.prefix = prefix;\nexports.iconName = iconName; \nexports.width = width;\nexports.height = height;\nexports.ligatures = ligatures;\nexports.unicode = unicode;\nexports.svgPathData = svgPathData;\n\n//# sourceURL=webpack:///./node_modules/@fortawesome/free-solid-svg-icons/faBomb.js?");
+
+/***/ })
+
+}]);
+//# sourceMappingURL=NotFound.js.map
