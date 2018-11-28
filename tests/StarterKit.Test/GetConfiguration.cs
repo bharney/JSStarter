@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using System.IO;
 
 namespace StarterKit.Test
@@ -10,7 +12,7 @@ namespace StarterKit.Test
             return new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true)
-                .AddUserSecrets("f986c0ad-1451-4764-ab20-4f8fb8512e45")
+                .AddUserSecrets<Startup>()
                 .AddEnvironmentVariables()
                 .Build();
         }
