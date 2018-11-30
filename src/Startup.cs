@@ -46,10 +46,10 @@ namespace StarterKit
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/build";
+            //});
             services.Configure<FormOptions>(x => x.ValueCountLimit = int.MaxValue);
 
             services.AddCors();

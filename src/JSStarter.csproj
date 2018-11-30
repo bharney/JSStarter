@@ -10,7 +10,6 @@
     <UserSecretsId>f986c0ad-1451-4764-ab20-4f8fb8512e46</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>1</WebProject_DirectoryAccessLevelKey>
     <SpaRoot>ClientApp\</SpaRoot>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +30,7 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.3.0" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.2" />
   </ItemGroup>
+  
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
@@ -73,7 +73,7 @@
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
-      <DistFiles Include="$(SpaRoot)build\**; $(SpaRoot)build-ssr\**" />
+      <DistFiles Include="wwwroot\dist\**; $(SpaRoot)public\**" />
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

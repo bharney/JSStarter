@@ -10,6 +10,8 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
+
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
 
@@ -98,6 +100,11 @@ module.exports = (env) => {
                 inject: false,
                 chunksSortMode: 'manual',
                 chunks: ['critical', 'vendor', 'bundle']
+            }),
+            new WorkboxPlugin.GenerateSW({
+                swDest: "../../Views/Home/manifest.js",
+                clientsClaim: true,
+                skipWaiting: true
             }),
             new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', JQuery: 'jquery', Popper: ['popper.js', 'default'] }),
             new webpack.NormalModuleReplacementPlugin(/\/iconv-loader$/, require.resolve('node-noop')), // Workaround for https://github.com/andris9/encoding/issues/16
