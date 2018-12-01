@@ -94,17 +94,17 @@ module.exports = (env) => {
                 filename: '[name].css',
                 chunkFilename: "[id].css"
             }),
+            new WorkboxPlugin.GenerateSW({
+                swDest: "service-worker.js",
+                clientsClaim: true,
+                skipWaiting: true
+            }),
             new HtmlWebpackPlugin({
                 template: "../Views/Home/IndexTemplate.cshtml",
                 filename: "../../Views/Home/Index.cshtml",
                 inject: false,
                 chunksSortMode: 'manual',
                 chunks: ['critical', 'vendor', 'bundle']
-            }),
-            new WorkboxPlugin.GenerateSW({
-                swDest: "../../Views/Home/manifest.js",
-                clientsClaim: true,
-                skipWaiting: true
             }),
             new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', JQuery: 'jquery', Popper: ['popper.js', 'default'] }),
             new webpack.NormalModuleReplacementPlugin(/\/iconv-loader$/, require.resolve('node-noop')), // Workaround for https://github.com/andris9/encoding/issues/16

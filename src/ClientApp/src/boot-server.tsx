@@ -36,6 +36,7 @@ export default createServerRenderer(params => {
             let mainScripts = "";
             let vendorScripts = "";
             let vendorStyles = "";
+            let manifest = "";
             if (serverParams.Styles) {
                 let files = serverParams.Styles;
                 criticalStyles = files.filter(bundle => bundle.includes('critical.css')).map(style => {
@@ -57,6 +58,9 @@ export default createServerRenderer(params => {
                     return `<script charset="utf-8" src="${script}"></script>`
                 }).join('\n')
                 mainScripts = files.filter(bundle => bundle.includes('bundle.js')).map(script => {
+                    return `<script charset="utf-8" src="${script}"></script>`
+                }).join('\n')
+                manifest = files.filter(bundle => bundle.includes('service-worker.js')).map(script => {
                     return `<script charset="utf-8" src="${script}"></script>`
                 }).join('\n')
             }
@@ -103,6 +107,7 @@ export default createServerRenderer(params => {
                     ${vendorScripts}
                     ${scripts.map(script => `<script charset="utf-8" src="/dist/${script.file}"></script>`).join('\n')}
                     ${mainScripts}
+                    ${manifest}
                 </body>
             </html>`
 
