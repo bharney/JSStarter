@@ -29,6 +29,7 @@ export default createServerRenderer(params => {
                     cookie: (name, val) => { cookiesModifiedOnServer[name] = val; }
                 })
             }
+
             var serverParams = JSON.parse(params.data);
             let criticalStyles = "";
             let criticalScripts = "";
@@ -83,7 +84,6 @@ export default createServerRenderer(params => {
                 </Loadable.Capture>
             );
 
-
             let bundles = getBundles(stats, modules);
             let styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
             let scripts = bundles.filter(bundle => bundle.file.endsWith('.js'));
@@ -91,6 +91,7 @@ export default createServerRenderer(params => {
                 <head>
                     <meta charset="utf-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                    <meta name="theme-color" content="#343A40" />
                     <meta name="description" content="Starter Pack for React with ASP.NET Core" />
                     <title>Starter Pack</title>
                     <style>
