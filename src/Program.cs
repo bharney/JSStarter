@@ -53,10 +53,10 @@ namespace StarterKit
             .ConfigureAppConfiguration((ctx, config) =>
             {
                 var env = ctx.HostingEnvironment;
-                if (env.IsDevelopment())
-                {
-                    config.AddUserSecrets<Startup>();
-                }
+                //if (env.IsDevelopment())
+                //{
+                config.AddUserSecrets<Startup>();
+                //}
                 var builtConfig = config.Build();
 
                 var keyVaultConfigBuilder = new ConfigurationBuilder();

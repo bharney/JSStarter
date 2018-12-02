@@ -97,7 +97,11 @@ module.exports = (env) => {
             new WorkboxPlugin.GenerateSW({
                 swDest: "service-worker.js",
                 clientsClaim: true,
-                skipWaiting: true
+                skipWaiting: true,
+                runtimeCaching: [{
+                    urlPattern: new RegExp('https://jsstarterapp.azurewebistes.net'),
+                    handler: 'staleWhileRevalidate'
+                }]
             }),
             new HtmlWebpackPlugin({
                 template: "../Views/Home/IndexTemplate.cshtml",
