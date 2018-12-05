@@ -30,7 +30,6 @@ export default function register() {
     }
 
       window.addEventListener('load', () => {
-          debugger;
       const swUrl = `dist/service-worker.js`;
 
       if (isLocalhost) {

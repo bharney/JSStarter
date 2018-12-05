@@ -11,6 +11,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
@@ -101,11 +102,62 @@ module.exports = (env) => {
                 chunksSortMode: 'manual',
                 chunks: ['critical', 'vendor', 'bundle']
             }),
+            new WebpackPwaManifest({
+                "name": "JSStarter",
+                "short_name": "JSStarter",
+                "theme_color": "#343a40",
+                "background_color": "#343a40",
+                "display": "standalone",
+                "Scope": "/",
+                "start_url": "/",
+                "icons": [
+                    {
+                        "src": "src/images/icons/icon-72x72.png",
+                        "sizes": "72x72",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": "src/images/icons/icon-96x96.png",
+                        "sizes": "96x96",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": "src/images/icons/icon-128x128.png",
+                        "sizes": "128x128",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": "src/images/icons/icon-144x144.png",
+                        "sizes": "144x144",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": "src/images/icons/icon-152x152.png",
+                        "sizes": "152x152",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": "src/images/icons/icon-192x192.png",
+                        "sizes": "192x192",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": "src/images/icons/icon-384x384.png",
+                        "sizes": "384x384",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": "src/images/icons/icon-512x512.png",
+                        "sizes": "512x512",
+                        "type": "image/png"
+                    }
+                ],
+                "splash_pages": null
+            }),
             new WorkboxPlugin.GenerateSW({
                 swDest: "service-worker.js",
                 clientsClaim: true,
-                skipWaiting: true,
-                importScripts: "../Views/Home/manifest.js"
+                skipWaiting: true
             }),
             new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', JQuery: 'jquery', Popper: ['popper.js', 'default'] }),
             new webpack.NormalModuleReplacementPlugin(/\/iconv-loader$/, require.resolve('node-noop')), // Workaround for https://github.com/andris9/encoding/issues/16
