@@ -36,6 +36,7 @@ The primary dependencies for getting up and running from scratch are as follows
 - Open PowerShell set the execution policy to allow scripts to be run for signed scriptsor unrestricted `Set-ExecutionPolicy RemoteSigned` 
 - Install-Module -Name Az -AllowClobber
 - Install-Module -Name AzureRM -AllowClobber
+- Install-Module AzureAD -AllowClobber
 
 # Run Powershell deployment Script
 There is a `scripts > setup.ps1` Powershell script that will setup KeyVault and Azure resource dependencies to get up and running quickly. I walk through what the script does below. Before running the script, make sure to add your secrets file to the main project. You will use this secrets guid for the powershell script.
