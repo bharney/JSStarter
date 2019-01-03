@@ -1,8 +1,15 @@
 ﻿
+Add-Type -AssemblyName System.Web
 $OptionalParameters = New-Object -TypeName Hashtable
 $ResourceGroupLocation = "West US 2"
 $ResourceGroupName = "jsstarter"
 $secretsGuid = 'f986c0ad-1451-4764-ab20-4f8fb8512e46'
+$path = "$env:APPDATA\Microsoft\UserSecrets\$secretsGuid"
+
+If(!(Test-Path $path))
+{
+  New-Item -Path $path -Name secrets.json -Type File -Force -value "{}"
+}
 
 $secrets = Get-Content $env:APPDATA\Microsoft\UserSecrets\$secretsGuid\secrets.json | ConvertFrom-Json
 #$SendGridKey="SG.xxxxxxxxxx-xxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
