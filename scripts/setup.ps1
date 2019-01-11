@@ -1,6 +1,7 @@
 ﻿Param(
     [string] $ResourceGroupLocation = "West US 2",
     [string] [Parameter(Mandatory=$true)] $ResourceGroupName = "jsstarter",
+    [string] [Parameter(Mandatory=$true)] $SubscriptionName = "Brian Harney",
     [string] $secretsGuid = 'f986c0ad-1451-4764-ab20-4f8fb8512e46',
     [string] $TemplateFile = '../deploy/WebSiteSQLDatabase.json',
     [string] $TemplateParametersFile = '../deploy/WebSiteSQLDatabase.parameters.json'
@@ -41,10 +42,12 @@ $appName = -join("$ResourceGroupName","app")
 Connect-AzureRmAccount
 
 #if you have multiple subscriptions you will need to include this
-Get-AzureRmSubscription | Where-Object {$_.Name -eq "Brian Harney"} | Set-AzureRmContext
+## Replace "Brian Harney" with your subscription name.
+Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Set-AzureRmContext
 
 ########## Connect to AD #########
-$TenantId = Get-AzureRmSubscription | Where-Object {$_.Name -eq "Brian Harney"} | Select-Object -Property TenantId
+## Replace "Brian Harney" with your subscription name.
+$TenantId = Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Select-Object -Property TenantId
 $TenantId = $TenantId.TenantId
 Connect-AzureAD -TenantId $TenantId
 #Write-Host "tenantId: $TenantId"

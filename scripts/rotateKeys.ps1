@@ -1,9 +1,21 @@
-﻿
+﻿Param(
+    [string] $ResourceGroupLocation = "West US 2",
+    [string] [Parameter(Mandatory=$true)] $ResourceGroupName = "jsstarter",
+    [string] [Parameter(Mandatory=$true)] $SubscriptionName = "Brian Harney",
+    [string] $secretsGuid = 'f986c0ad-1451-4764-ab20-4f8fb8512e46',
+    [string] $TemplateFile = '../deploy/WebSiteSQLDatabase.json',
+    [string] $TemplateParametersFile = '../deploy/WebSiteSQLDatabase.parameters.json'
+)
+
+try {
+    [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent("VSAzureTools-$UI$($host.name)".replace(' ','_'), '3.0.0')
+} catch { }
+
 Add-Type -AssemblyName System.Web
+
+Connect-AzureRmAccount
+
 $OptionalParameters = New-Object -TypeName Hashtable
-$ResourceGroupLocation = "West US 2"
-$ResourceGroupName = "jsstarter"
-$secretsGuid = 'f986c0ad-1451-4764-ab20-4f8fb8512e46'
 $path = "$env:APPDATA\Microsoft\UserSecrets\$secretsGuid"
 
 If(!(Test-Path $path))
@@ -33,14 +45,13 @@ $appName = -join("$ResourceGroupName","app")
 $ObjectId = Get-AzureADApplication –SearchString $appName
 $VaultEndpoint = "https://$KeyVaultName.vault.azure.net/"
 
-Connect-AzureRmAccount
-
 #if you have multiple subscriptions you will need to include this
-Get-AzureRmSubscription | Where-Object {$_.Name -eq "Brian Harney"} | Set-AzureRmContext
+Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Set-AzureRmContext
 
-$TenantId = Get-AzureRmSubscription | Where-Object {$_.Name -eq "Brian Harney"} | Select-Object -Property TenantId
+$TenantId = Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Select-Object -Property TenantId
 $TenantId = $TenantId.TenantId
 Connect-AzureAD -TenantId $TenantId
+
 #$ObjectId = New-AzureADApplication -DisplayName $appName -IdentifierUris "https://www.$ResourceGroupName.azurewebsites.net" | Select-Object -Property ObjectId
 $ObjectId = Get-AzureADApplication –SearchString $appName | Select -First 1
 $ResourceGroupName = "jsstarter"
