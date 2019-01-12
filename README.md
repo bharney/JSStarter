@@ -39,7 +39,7 @@ The primary dependencies for getting up and running from scratch are as follows
 - Install-Module AzureAD -AllowClobber
 
 # Run Powershell deployment Script
-There is a `scripts > setup.ps1` Powershell script that will setup KeyVault and Azure resource dependencies to get up and running quickly. I walk through what the script does below. Before running the script, make sure to add your secrets file to the main project. You will use this secrets guid for the powershell script.
+Open Powershell ISE and open the file `setup.ps1`. Set your working directory to the setup script `cd .\source\repos\JSStarter\scripts`. There is a `scripts > setup.ps1` Powershell script that will setup KeyVault and Azure resource dependencies to get up and running quickly. I walk through what the script does below. Before running the script, make sure to add your secrets file to the main project. You will use this secrets guid for the powershell script.
 
 # ;TLDR
 Run the setup.ps1 script to generate KeyVault, Add secrets for connection string, JWT, blob storage and other Keys. Save the AAD Application to your secrets file, and deploy an ARM Template to setup all of the other resources like App Service, SQL Server, Blob Storage, and SendGrid.
