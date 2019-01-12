@@ -38,11 +38,14 @@ The primary dependencies for getting up and running from scratch are as follows
 - Install-Module -Name AzureRM -AllowClobber
 - Install-Module AzureAD -AllowClobber
 
-# Run Powershell deployment Script
-Open Powershell ISE and open the file `setup.ps1`. Set your working directory to the setup script `cd .\source\repos\JSStarter\scripts`. There is a `scripts > setup.ps1` Powershell script that will setup KeyVault and Azure resource dependencies to get up and running quickly. I walk through what the script does below. Before running the script, make sure to add your secrets file to the main project. You will use this secrets guid for the powershell script.
+# Run Powershell setup deployment Script
+1. Setup your KeyVault and Secrets file. Open Powershell ISE and open the file `setup.ps1`. Set your working directory to the setup script `cd .\source\repos\JSStarter\scripts`. There is a `scripts > setup.ps1` Powershell script that will setup KeyVault and Azure resource dependencies to get up and running quickly. I walk through what the script does below. Before running the script, make sure to add your secrets file to the main project. You will use this secrets guid for the powershell script.
+
+2. Run the Azure deployment script via ARM Template. Run `deploy/Deploy-AzureResourceGroup.ps1` script to spin up and deploy the Azure resources. This step depends on the first step as the secrets and KeyVault are dependencies.
 
 # ;TLDR
-Run the setup.ps1 script to generate KeyVault, Add secrets for connection string, JWT, blob storage and other Keys. Save the AAD Application to your secrets file, and deploy an ARM Template to setup all of the other resources like App Service, SQL Server, Blob Storage, and SendGrid.
+- Navigate to the scripts directory `cd .\source\repos\JSStarter\scripts`. Run `setup.ps1` to setup the KeyVault and Secrets file. 
+- Deploy ARM Template to setup all of the other resources like App Service, SQL Server, Blob Storage, and SendGrid `Deploy-AzureResourceGroup.ps1`.
 
 # Setup KeyVault and Azure Resources
 Before you go any further. This template is built on the idea that you will be hosting the site in the cloud with Azure. This takes advantage of Azures Resource Manager, Key Vault, SQL Server, and App Services. Before you do anything you will need to have an azure subscription. Below walks through the commands. The entire [PowerShell Script can be found here](https://github.com/bharney/powershell).
