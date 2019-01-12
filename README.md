@@ -34,9 +34,9 @@ The primary dependencies for getting up and running from scratch are as follows
 - Navigate to src/ClientApp `npm install`
 - Make sure directory for secrets.json is setup %APPDATA%/Microsoft/UserSecrets/`SECRETS_GUID`/secrets.json. You can set this up by either creating the directories. Or use Visual Studio Secrets Manager to get setup, which will create the directory for you.
 - Open PowerShell set the execution policy to allow scripts to be run for signed scriptsor unrestricted `Set-ExecutionPolicy RemoteSigned` 
-- Install-Module -Name Az -AllowClobber
-- Install-Module -Name AzureRM -AllowClobber
-- Install-Module AzureAD -AllowClobber
+- `Install-Module -Name Az -AllowClobber`
+- `Install-Module -Name AzureRM -AllowClobber`
+- `Install-Module AzureAD -AllowClobber`
 
 # Run Powershell setup deployment Script
 1. Setup your KeyVault and Secrets file. Open Powershell ISE and open the file `setup.ps1`. Set your working directory to the setup script `cd .\source\repos\JSStarter\scripts`. There is a `scripts > setup.ps1` Powershell script that will setup KeyVault and Azure resource dependencies to get up and running quickly. I walk through what the script does below. Before running the script, make sure to add your secrets file to the main project. You will use this secrets guid for the powershell script.
