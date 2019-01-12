@@ -2,9 +2,7 @@
     [string] $ResourceGroupLocation = "West US 2",
     [string] [Parameter(Mandatory=$true)] $ResourceGroupName = "jsstarter",
     [string] [Parameter(Mandatory=$true)] $SubscriptionName = "Brian Harney",
-    [string] $secretsGuid = 'f986c0ad-1451-4764-ab20-4f8fb8512e46',
-    [string] $TemplateFile = '../deploy/WebSiteSQLDatabase.json',
-    [string] $TemplateParametersFile = '../deploy/WebSiteSQLDatabase.parameters.json'
+    [string] $secretsGuid = 'f986c0ad-1451-4764-ab20-4f8fb8512e46'
 )
 
 try {
@@ -22,6 +20,13 @@ If(!(Test-Path $path))
 {
   New-Item -Path $path -Name secrets.json -Type File -Force -value "{}"
 }
+
+#if you have multiple subscriptions you will need to include this
+Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Set-AzureRmContext
+
+$TenantId = Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Select-Object -Property TenantId
+$TenantId = $TenantId.TenantId
+Connect-AzureAD -TenantId $TenantId
 
 $secrets = Get-Content $env:APPDATA\Microsoft\UserSecrets\$secretsGuid\secrets.json | ConvertFrom-Json
 #$SendGridKey="SG.xxxxxxxxxx-xxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
@@ -45,12 +50,6 @@ $appName = -join("$ResourceGroupName","app")
 $ObjectId = Get-AzureADApplication –SearchString $appName
 $VaultEndpoint = "https://$KeyVaultName.vault.azure.net/"
 
-#if you have multiple subscriptions you will need to include this
-Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Set-AzureRmContext
-
-$TenantId = Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Select-Object -Property TenantId
-$TenantId = $TenantId.TenantId
-Connect-AzureAD -TenantId $TenantId
 
 #$ObjectId = New-AzureADApplication -DisplayName $appName -IdentifierUris "https://www.$ResourceGroupName.azurewebsites.net" | Select-Object -Property ObjectId
 $ObjectId = Get-AzureADApplication –SearchString $appName | Select -First 1

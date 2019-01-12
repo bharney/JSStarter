@@ -10,13 +10,18 @@
 try {
     [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent("VSAzureTools-$UI$($host.name)".replace(' ','_'), '3.0.0')
 } catch { }
+Add-Type -AssemblyName System.Web
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 3
 
-
 $OptionalParameters = New-Object -TypeName Hashtable
+$path = "$env:APPDATA\Microsoft\UserSecrets\$secretsGuid"
 
+If(!(Test-Path $path))
+{
+  New-Item -Path $path -Name secrets.json -Type File -Force -value "{}"
+}
 
 $secrets = Get-Content $env:APPDATA\Microsoft\UserSecrets\$secretsGuid\secrets.json | ConvertFrom-Json
 $SendGridKey="SG.xxxxxxxxxx-xxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
@@ -42,11 +47,9 @@ $appName = -join("$ResourceGroupName","app")
 Connect-AzureRmAccount
 
 #if you have multiple subscriptions you will need to include this
-## Replace "Brian Harney" with your subscription name.
 Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Set-AzureRmContext
 
 ########## Connect to AD #########
-## Replace "Brian Harney" with your subscription name.
 $TenantId = Get-AzureRmSubscription | Where-Object {$_.Name -eq $SubscriptionName} | Select-Object -Property TenantId
 $TenantId = $TenantId.TenantId
 Connect-AzureAD -TenantId $TenantId
