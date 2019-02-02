@@ -33,12 +33,16 @@ class Profile extends React.Component<ProfileProps, any> {
           <div className="col-12 form-wrapper">
             <h2 className="text-center display-4">Profile.</h2>
           </div>
-          <div className="col-12 col-sm-8 col-md-8 col-lg-5 text-center form-wrapper">
-            <img
-              className="img-fluid"
-              src={profile.imageUrl}
-              alt="Profile Image"
-            />
+                    <div className="col-12 col-sm-8 col-md-8 col-lg-5 text-center form-wrapper">
+                        {profile.imageUrl ? <img
+                            className="img-fluid rounded"
+                            src={profile.imageUrl}
+                            alt="Profile Image"
+                        /> : <img
+                                className="img-fluid rounded"
+                                src="http://www.clker.com/cliparts/C/N/O/F/T/X/blank-profile-md.png"
+                                alt="Profile Image"
+                            />}
           </div>
           <div className="col-12 col-sm-8 col-md-8 col-lg-5 form-wrapper">
             <div className="form-group">
