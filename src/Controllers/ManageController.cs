@@ -162,13 +162,12 @@ namespace StarterKit.Controllers
                     }
                 }
 
-                return "";
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                _logger.Log(LogLevel.Error, $"Unable to upload image file: {e.Message}");
             }
+            return "";
         }
 
         [HttpGet]
