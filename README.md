@@ -145,7 +145,7 @@ Copy and Paste the `secrets.json` file below (without the comments). This will b
 ```
 
 ## Add Secrets to KeyVault
-Add the following secrets to the KeyVault. There is a file `scripts/secrets.json` containing a json object of key value pairs. You will replace the values in the file with your own. Dont inclue the --comments at the end of each line. After you have updated your `secrets.json` file with your own values, run the command below to add the secrets to your KeyVault. These need to be added to the KeyVault befor deploying the ARM template.
+Add the following secrets to the KeyVault. There is a file `scripts/setup.ps1` containing a json object of key value pairs. You will replace the values in the file with your own. Dont inclue the --comments at the end of each line. After you have updated your `secrets.json` file with your own values, run the command below to add the secrets to your KeyVault. These need to be added to the KeyVault befor deploying the ARM template.
 
 ```
 # helper to turn PSCustomObject into a list of key/value pairs
