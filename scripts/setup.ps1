@@ -1,7 +1,7 @@
 ﻿Param(
     [string] $ResourceGroupLocation = "West US 2",
-    [string] [Parameter(Mandatory=$true)] $ResourceGroupName = "jsstarter",
-    [string] [Parameter(Mandatory=$true)] $SubscriptionName = "Brian Harney",
+    [string] $ResourceGroupName = "jsstarter",
+    [string] $SubscriptionName = "Brian Harney",
     [string] $secretsGuid = 'f986c0ad-1451-4764-ab20-4f8fb8512e46',
     [string] $TemplateFile = '../deploy/WebSiteSQLDatabase.json',
     [string] $TemplateParametersFile = '../deploy/WebSiteSQLDatabase.parameters.json'
@@ -25,7 +25,7 @@ If(!(Test-Path $path))
 
 $secrets = Get-Content $env:APPDATA\Microsoft\UserSecrets\$secretsGuid\secrets.json | ConvertFrom-Json
 $SendGridKey="SG.xxxxxxxxxx-xxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$SendGridUser="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$SendGridUser= $ResourceGroupName
 $SqlUserName = $ResourceGroupName
 $sqlPassword = [system.web.security.membership]::generatepassword(16,3)
 $secureSqlPassword = convertto-securestring -force -asplaintext -string $sqlPassword
@@ -80,6 +80,7 @@ Set-AzureRmKeyVaultAccessPolicy -VaultName $KeyVaultName -ResourceGroupName $Res
 
 ########## Create Application Registration within AD #########
 $ObjectId = New-AzureADApplication -DisplayName $appName -IdentifierUris "https://www.$ResourceGroupName.azurewebsites.net" | Select-Object -Property ObjectId
+#If AzureADApplication already exists get objectId from existing application
 #$ObjectId = Get-AzureADApplication –SearchString $appName
 
 ############ Service Principal for Application ##################
@@ -89,6 +90,8 @@ $appId = Get-AzureRmADApplication -DisplayNameStartWith $appName | Select-Object
 $spPassword = [system.web.security.membership]::generatepassword(16,3)
 $securepassword = convertto-securestring -force -asplaintext -string $spPassword
 $servicePrincipal = new-azurermadserviceprincipal -applicationid $appId.applicationid.guid -password $securepassword
+#Get ServicePrincipal if it already exists.
+#$servicePrincipal = Get-AzureRMADServicePrincipal | Where-Object {$_.ApplicationId -eq $appId.ApplicationId.Guid} | Select-Object -Property Id
 Start-Sleep -s 25 # Wait till the ServicePrincipal is completely created. Usually takes 20+secs. Needed as Role assignment needs a fully deployed servicePrincipal
 
 $servicePrincipal = $servicePrincipal.Id.Guid

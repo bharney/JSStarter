@@ -1,7 +1,7 @@
 ﻿Param(
     [string] $ResourceGroupLocation = "West US 2",
-    [string] [Parameter(Mandatory=$true)] $ResourceGroupName = "jsstarter",
-    [string] [Parameter(Mandatory=$true)] $SubscriptionName = "Brian Harney",
+    [string] $ResourceGroupName = "jsstarter",
+    [string] $SubscriptionName = "Brian Harney",
     [string] $secretsGuid = 'f986c0ad-1451-4764-ab20-4f8fb8512e46'
 )
 
