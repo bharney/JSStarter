@@ -1,3 +1,4 @@
+using JSStarter.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
@@ -100,6 +101,7 @@ namespace StarterKit
             services.AddScoped<ICachedUserRepository<ApplicationUser>, CachedUserRepositoryDecorator>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IImageStorageService, ImageStorageService>();
+            services.AddScoped<IAccountHelpers, AccountHelpers>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<DbSeeder>();
 
