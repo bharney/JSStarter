@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using JSStarter.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -33,6 +34,7 @@ namespace StarterKit.Controllers
         private readonly IConfiguration _config;
         private readonly IUserContext _userContext;
         private HttpContext _httpContext;
+        private readonly IAccountHelpers _accountHelpers;
         
         private const string UserGuidCookiesName = "StarterPackUserGuid";
 
@@ -44,7 +46,8 @@ namespace StarterKit.Controllers
             IConfiguration config,
             IHttpContextAccessor contextAccessor,
             ICachedUserRepository<ApplicationUser> userRepository,
-            IMemoryCache cache)
+            IMemoryCache cache,
+            IAccountHelpers accountHelpers)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -60,6 +63,7 @@ namespace StarterKit.Controllers
                 _config,
                 loggerFactory,
                 cache);
+            _accountHelpers = accountHelpers;
         }
 
         [TempData]
@@ -87,7 +91,7 @@ namespace StarterKit.Controllers
                     }
                     if (allowPassOnEmailVerfication)
                     {
-                        return allowPassOnEmailVerfication ? RedirectToLocal(returnUrl) : RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                        return allowPassOnEmailVerfication ? this._accountHelpers.RedirectToLocal(returnUrl) : RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                     }
                     if (result.Succeeded)
                     {
@@ -227,7 +231,7 @@ namespace StarterKit.Controllers
                 _userContext.SetUserGuidCookies(user.UserGuid);
                 return Ok(new { token = await _userContext.GenerateToken(user) });
             }
-            AddErrors(result);
+            this._accountHelpers.AddErrors(result);
             return Ok();
         }
 
@@ -249,7 +253,7 @@ namespace StarterKit.Controllers
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
-                AddErrors(changePasswordResult);
+                this._accountHelpers.AddErrors(changePasswordResult);
                 return Ok();
             }
 
@@ -284,7 +288,7 @@ namespace StarterKit.Controllers
             var deleteUserResult = await _userManager.DeleteAsync(user);
             if (!deleteUserResult.Succeeded)
             {
-                AddErrors(deleteUserResult);
+                this._accountHelpers.AddErrors(deleteUserResult);
                 return Ok();
             }
 
@@ -440,30 +444,5 @@ namespace StarterKit.Controllers
         {
             return Ok(new { token = await _userContext.GenerateToken(await _userContext.GetCurrentUser()) });
         }
-
-
-        #region Helpers
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-        }
-
-        private IActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
-        }
-
-        #endregion
     }
 }
